@@ -4,9 +4,9 @@ import Image from "next/image";
 export const HeaderLogo = () => {
   return (
     <Link href="/">
-      <div className="items-center hidden lg:flex">
-        <Image src="/jmu-stacked-white.png" alt="Logo" width={300} height={300} />
-        <p className="font-robotoSlab font-semibold text-white text-2xl ml-2.5">UREC Community</p>
+      <div className="items-center flex">
+        <Image src="/jmu-white.png" alt="Logo" width={75} height={75} />
+        <p className="font-roboto-slab font-semibold text-white text-3xl ml-10">UREC Community</p>
       </div>
     </Link>
   );
