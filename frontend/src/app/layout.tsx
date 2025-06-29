@@ -1,12 +1,13 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Roboto_Slab } from "next/font/google";
+import { Lato } from "next/font/google";
 
 import { Header } from "@/components/header";
 
-export const robotoSlab = Roboto_Slab({
+export const lato = Lato({
+  weight: "300",
   subsets: ["latin"],
-  variable: "--font-roboto-slab",
+  variable: "--font-lato",
 });
 
 export const metadata: Metadata = {
@@ -21,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${robotoSlab.variable} antialiased`}>
+      <body className={lato.className}>
         <Header />
         {children}
       </body>

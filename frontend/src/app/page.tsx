@@ -2,7 +2,7 @@ export default async function Home() {
   return (
     <div>
       <div className="text-black">
-        <p>Front page.</p>
+        <p>Welcome to UREC Community</p>
       </div>
     </div>
   );
