@@ -2,6 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Roboto_Slab } from "next/font/google";
 
+import { Header } from "@/components/header";
+
 export const robotoSlab = Roboto_Slab({
   subsets: ["latin"],
   variable: "--font-roboto-slab",
@@ -19,7 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${robotoSlab.variable} antialiased`}>{children}</body>
+      <body className={`${robotoSlab.variable} antialiased`}>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
