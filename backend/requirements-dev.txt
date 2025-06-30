@@ -1,0 +1,35 @@
+# Include production dependencies
+-r requirements.txt
+
+# Development tools
+black  # Code formatting
+isort  # Import sorting
+flake8  # Linting
+mypy  # Type checking
+pre-commit  # Git hooks
+
+# Testing
+pytest
+pytest-asyncio
+pytest-cov  # Coverage reporting
+pytest-mock  # Mocking utilities
+factory-boy  # Test data factories
+faker  # Generate fake data for tests
+
+# Development server with auto-reload
+watchfiles
+
+# Database testing
+pytest-postgresql  # For test database
+sqlalchemy-utils  # Database utilities
+
+# API testing
+httpx  # Async HTTP client for testing
+
+# Documentation
+mkdocs  # If you want to generate docs
+mkdocs-material
+
+# Development utilities
+ipython  # Better REPL
+rich  # Better console output

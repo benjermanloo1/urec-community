@@ -11,6 +11,12 @@
 !.yarn/releases
 !.yarn/versions
 
+# virtual environment
+/backend/venv
+
+# backend cache
+/backend/app/__pycache__
+
 # testing
 /coverage
 

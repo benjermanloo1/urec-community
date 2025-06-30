@@ -1,0 +1,60 @@
+# Core FastAPI dependencies
+fastapi[standard]
+uvicorn[standard]
+pydantic
+pydantic-settings
+
+# Database
+sqlmodel
+alembic
+psycopg2-binary  # PostgreSQL driver (or use asyncpg for async)
+
+# Authentication (Auth0)
+python-jose[cryptography]
+python-multipart
+passlib[bcrypt]
+
+# AWS S3
+boto3
+botocore
+
+# Email service
+sendgrid  # or use emails/fastapi-mail
+# emails
+# fastapi-mail
+
+# Image processing
+Pillow
+python-magic
+
+# HTTP client (for external APIs)
+httpx
+requests
+
+# Environment variables
+python-dotenv
+
+# CORS
+fastapi-cors  # or use fastapi's built-in CORSMiddleware
+
+# Validation utilities
+email-validator
+phonenumbers
+
+# Async database support (optional but recommended)
+asyncpg
+databases[postgresql]
+
+# Logging and monitoring
+structlog
+sentry-sdk[fastapi]
+
+# Testing (move to requirements-dev.txt if preferred)
+pytest
+pytest-asyncio
+httpx  # for testing async endpoints
+factory-boy  # for test data factories
+
+# Optional: API documentation enhancements
+fastapi-users  # if you want pre-built user management
+fastapi-pagination  # for pagination support
