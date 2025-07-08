@@ -8,6 +8,8 @@ pydantic-settings
 sqlmodel
 alembic
 psycopg2-binary  # PostgreSQL driver (or use asyncpg for async)
+psycopg2
+supabase
 
 # Authentication (Auth0)
 python-jose[cryptography]
@@ -33,6 +35,7 @@ requests
 
 # Environment variables
 python-dotenv
+python-decouple
 
 # CORS
 fastapi-cors  # or use fastapi's built-in CORSMiddleware
