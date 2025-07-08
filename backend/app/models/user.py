@@ -31,9 +31,16 @@ class UserCreate(SQLModel):
     last_name: str
 
 
-class UserRead(UserBase):
+class UserRead(SQLModel):
     id: int
-    created_ad: datetime
+    email: str
+    first_name: str
+    last_name: str
+    is_active: bool
+    signup_completed: bool
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+    profile_picture_url: Optional[str] = None
 
 
 class UserUpdate(SQLModel):
