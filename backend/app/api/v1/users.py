@@ -4,10 +4,25 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import select
 
 from backend.app.core.db import get_session
+from backend.app.models.email import Email
 from backend.app.models.user import User, UserCreate, UserRead
+from backend.app.services.verify_email import create_message, mail
 from backend.app.utils.utils import hash_password, is_valid_jmu_email, verify_password
 
 router = APIRouter(tags=["users"])
+
+
+@router.post("/send-email")
+async def send_email(emails: Email):
+    emails = emails.addresses
+
+    html = "<h1>VERIFY YO EMAIL</h1>"
+
+    message = create_message(emails, "Verify your email", html)
+
+    await mail.send_message(message)
+
+    return {"message": "Email sent successfully"}
 
 
 @router.post("/sign-up", response_model=UserRead)
@@ -27,6 +42,9 @@ async def create_user(user_data: UserCreate, session=Depends(get_session)):
         )
 
     hashed_password = hash_password(user_data.password)
+
+    if not verify_password(user_data.password, hashed_password):
+        raise HTTPException(status_code=400, detail="Passwords do not match")
 
     db_user = User(
         email=user_data.email,

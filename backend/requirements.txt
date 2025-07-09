@@ -21,9 +21,7 @@ boto3
 botocore
 
 # Email service
-sendgrid  # or use emails/fastapi-mail
-# emails
-# fastapi-mail
+fastapi-mail
 
 # Image processing
 Pillow

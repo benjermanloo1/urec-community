@@ -1,22 +1,11 @@
-from contextlib import asynccontextmanager
 from typing import Union
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.api.v1 import users
-from backend.app.core.db import create_db_and_tables
+from backend.app.api.v1 import users
 
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    create_db_and_tables()
-    print("Database tables created")
-    yield
-    print("Shutting down...")
-
-
-app = FastAPI(lifespan=lifespan)
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
