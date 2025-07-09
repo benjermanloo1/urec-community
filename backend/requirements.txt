@@ -44,16 +44,6 @@ itsdangerous
 asyncpg
 databases[postgresql]
 
-# Logging and monitoring
-structlog
-sentry-sdk[fastapi]
-
-# Testing (move to requirements-dev.txt if preferred)
-pytest
-pytest-asyncio
-httpx  # for testing async endpoints
-factory-boy  # for test data factories
-
 # Optional: API documentation enhancements
 fastapi-users  # if you want pre-built user management
 fastapi-pagination  # for pagination support
