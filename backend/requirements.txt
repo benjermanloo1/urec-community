@@ -33,14 +33,12 @@ requests
 
 # Environment variables
 python-dotenv
-python-decouple
 
 # CORS
 fastapi-cors  # or use fastapi's built-in CORSMiddleware
 
 # Validation utilities
-email-validator
-phonenumbers
+itsdangerous
 
 # Async database support (optional but recommended)
 asyncpg

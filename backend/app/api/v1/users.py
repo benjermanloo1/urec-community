@@ -5,7 +5,7 @@ from sqlmodel import select
 
 from backend.app.core.db import get_session
 from backend.app.models.email import Email
-from backend.app.models.user import User, UserCreate, UserRead
+from backend.app.models.user import User, UserCreate, UserRead, UserSignIn
 from backend.app.services.verify_email import create_message, mail
 from backend.app.utils.utils import is_valid_jmu_email
 
@@ -23,6 +23,17 @@ async def send_email(emails: Email):
     await mail.send_message(message)
 
     return {"message": "Email sent successfully"}
+
+
+@router.post("/sign-in")
+async def sign_in(user_data: UserSignIn, session=Depends(get_session)):
+    res = session.exec(select(User).where(User.email == user_data.email))
+    user = res.first()
+
+    if not user:
+        raise HTTPException(status_code=400, detail="No user with this email exists")
+
+    return user
 
 
 @router.post("/sign-up", response_model=UserRead)

@@ -41,6 +41,10 @@ class UserRead(SQLModel):
     profile_picture_url: Optional[str] = None
 
 
+class UserSignIn(SQLModel):
+    email: str
+
+
 class UserUpdate(SQLModel):
     first_name: Optional[str] = None
     last_name: Optional[str] = None

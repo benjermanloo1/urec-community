@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { AuthButton } from "@/components/auth/auth-button";
 import { AuthCard } from "@/components/auth/auth-card";
 import { AuthFooter } from "@/components/auth/auth-footer";
@@ -8,12 +10,28 @@ import { TextInput } from "@/components/auth/text-input";
 import { RememberMeCheckbox } from "@/components/auth/remember-me-checkbox";
 import { useState } from "react";
 
+import { signInUser } from "@/lib/api";
+
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSubmit = () => {
-    console.log("Sign in attempted with:", { email, rememberMe });
+  const router = useRouter();
+
+  const handleSubmit = async () => {
+    if (!email) {
+      alert("Please enter an email");
+      return;
+    }
+
+    try {
+      const user = await signInUser({ email });
+
+      router.push("/");
+      console.log(`Signed in with ${user.email}`);
+    } catch (error: any) {
+      alert("Sign in failed: " + error.message);
+    }
   };
 
   return (
