@@ -10,11 +10,10 @@ import { useState } from "react";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleSubmit = () => {
-    console.log("Sign in attempted with:", { email, password, rememberMe });
+    console.log("Sign in attempted with:", { email, rememberMe });
   };
 
   return (
@@ -28,14 +27,6 @@ export default function SignInPage() {
           value={email}
           onChange={setEmail}
           placeholder="Enter your JMU email"
-        />
-        <TextInput
-          id="password"
-          label="Password"
-          type="password"
-          value={password}
-          onChange={setPassword}
-          placeholder="Create a password"
         />
         <RememberMeCheckbox checked={rememberMe} onChange={setRememberMe} />
         <AuthButton onClick={handleSubmit}>Sign In</AuthButton>

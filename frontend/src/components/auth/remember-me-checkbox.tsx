@@ -3,10 +3,9 @@ import React from "react";
 interface RememberMeCheckboxProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
-  showForgotPassword?: boolean;
 }
 
-export const RememberMeCheckbox = ({ checked, onChange, showForgotPassword = true }: RememberMeCheckboxProps) => {
+export const RememberMeCheckbox = ({ checked, onChange }: RememberMeCheckboxProps) => {
   return (
     <div className="flex items-center justify-between">
       <label className="flex items-center">
@@ -18,11 +17,6 @@ export const RememberMeCheckbox = ({ checked, onChange, showForgotPassword = tru
         />
         <span className="ml-2 text-sm text-[#595959]">Remember me</span>
       </label>
-      {showForgotPassword && (
-        <a href="#" className="text-sm text-[#450084] hover:text-[#B599CE] transition-colors">
-          Forgot password?
-        </a>
-      )}
     </div>
   );
 };

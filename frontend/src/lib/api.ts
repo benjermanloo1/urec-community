@@ -2,12 +2,7 @@ import type { UserRead } from "@/lib/types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
-export async function signUpUser(data: {
-  email: string;
-  password: string;
-  first_name: string;
-  last_name: string;
-}): Promise<UserRead> {
+export async function signUpUser(data: { email: string; first_name: string; last_name: string }): Promise<UserRead> {
   const res = await fetch(`${API_BASE_URL}/sign-up`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

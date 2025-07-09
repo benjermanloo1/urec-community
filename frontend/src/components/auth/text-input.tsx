@@ -20,10 +20,6 @@ export const TextInput = ({
   placeholder,
   required = true,
 }: TextInputProps) => {
-  const [showPassword, setShowPassword] = useState(false);
-
-  const inputType = type === "password" ? (showPassword ? "text" : "password") : type;
-
   return (
     <div>
       <label htmlFor={id} className="block text-sm font-medium text-[#333333] mb-2">
@@ -31,7 +27,7 @@ export const TextInput = ({
       </label>
       <div className="relative">
         <input
-          type={inputType}
+          type={type}
           id={id}
           value={value}
           onChange={(e) => onChange(e.target.value)}
@@ -41,16 +37,6 @@ export const TextInput = ({
             type === "password" ? "pr-12" : ""
           }`}
         />
-        {type === "password" && (
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#595959] hover:text-[#450084] transition-colors"
-            aria-label={showPassword ? "Hide password" : "Show password"}
-          >
-            {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-          </button>
-        )}
       </div>
     </div>
   );

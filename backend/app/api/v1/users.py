@@ -7,7 +7,7 @@ from backend.app.core.db import get_session
 from backend.app.models.email import Email
 from backend.app.models.user import User, UserCreate, UserRead
 from backend.app.services.verify_email import create_message, mail
-from backend.app.utils.utils import hash_password, is_valid_jmu_email, verify_password
+from backend.app.utils.utils import is_valid_jmu_email
 
 router = APIRouter(tags=["users"])
 
@@ -41,16 +41,10 @@ async def create_user(user_data: UserCreate, session=Depends(get_session)):
             status_code=400, detail="User with this email already exists"
         )
 
-    hashed_password = hash_password(user_data.password)
-
-    if not verify_password(user_data.password, hashed_password):
-        raise HTTPException(status_code=400, detail="Passwords do not match")
-
     db_user = User(
         email=user_data.email,
         first_name=user_data.first_name,
         last_name=user_data.last_name,
-        hashed_password=hashed_password,
     )
 
     session.add(db_user)

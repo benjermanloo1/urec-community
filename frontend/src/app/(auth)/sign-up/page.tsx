@@ -14,18 +14,11 @@ export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    if (!email || !firstName || !lastName || !password || !confirmPassword) {
+    if (!email || !firstName || !lastName) {
       alert("Please fill in all fields.");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.");
       return;
     }
 
@@ -33,7 +26,6 @@ export default function SignUpPage() {
     try {
       const user = await signUpUser({
         email,
-        password,
         first_name: firstName,
         last_name: lastName,
       });
@@ -73,22 +65,6 @@ export default function SignUpPage() {
           value={email}
           onChange={setEmail}
           placeholder="Enter your JMU email"
-        />
-        <TextInput
-          id="password"
-          label="Password"
-          type="password"
-          value={password}
-          onChange={setPassword}
-          placeholder="Create a password"
-        />
-        <TextInput
-          id="confirmPassword"
-          label="Confirm Password"
-          type="password"
-          value={confirmPassword}
-          onChange={setConfirmPassword}
-          placeholder="Confirm your password"
         />
         <AuthButton onClick={handleSubmit}>Create Account</AuthButton>
       </div>

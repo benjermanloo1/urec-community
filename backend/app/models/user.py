@@ -17,7 +17,6 @@ class User(UserBase, table=True):
     __tablename__ = "users"
 
     id: Optional[int] = Field(default=None, primary_key=True)
-    hashed_password: str
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: Optional[datetime] = None
 
@@ -26,7 +25,6 @@ class User(UserBase, table=True):
 
 class UserCreate(SQLModel):
     email: str
-    password: str  # hashed
     first_name: str
     last_name: str
 
