@@ -7,7 +7,7 @@ from backend.app.core.db import get_session
 from backend.app.models.email import Email
 from backend.app.models.user import User, UserCreate, UserRead, UserSignIn
 from backend.app.services.verify_email import create_message, mail
-from backend.app.utils.utils import is_valid_jmu_email
+from backend.app.utils.utils import generate_code, is_valid_jmu_email
 
 router = APIRouter(tags=["users"])
 
@@ -16,13 +16,15 @@ router = APIRouter(tags=["users"])
 async def send_email(emails: Email):
     emails = emails.addresses
 
-    html = "<h1>VERIFY YO EMAIL</h1>"
+    code = generate_code()
+
+    html = f"<h1>VERIFY YO EMAIL WITH THIS CODE {code}</h1>"
 
     message = create_message(emails, "Verify your email", html)
 
     await mail.send_message(message)
 
-    return {"message": "Email sent successfully"}
+    return {"message": "Email sent successfully", "code": code}
 
 
 @router.post("/sign-in")
