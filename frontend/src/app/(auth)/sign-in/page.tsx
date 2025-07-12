@@ -10,7 +10,7 @@ import { TextInput } from "@/components/auth/text-input";
 import { RememberMeCheckbox } from "@/components/auth/remember-me-checkbox";
 import { useState } from "react";
 
-import { signInUser } from "@/lib/api";
+import { signInUser } from "@/lib/api/user";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");

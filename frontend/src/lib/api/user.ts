@@ -31,3 +31,14 @@ export async function signUpUser(data: { email: string; first_name: string; last
 
   return res.json() as Promise<UserRead>;
 }
+
+// TODO: Finish verifyUser
+export async function verifyUser(data: { code: string }) {
+  const res = await fetch(`${API_BASE_URL}/sign-up/verify`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  return res;
+}

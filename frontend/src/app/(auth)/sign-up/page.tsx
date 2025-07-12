@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { AuthButton } from "@/components/auth/auth-button";
 import { AuthCard } from "@/components/auth/auth-card";
@@ -8,13 +9,14 @@ import { AuthFooter } from "@/components/auth/auth-footer";
 import { AuthHeader } from "@/components/auth/auth-header";
 import { TextInput } from "@/components/auth/text-input";
 
-import { signUpUser } from "@/lib/api";
+import { signUpUser } from "@/lib/api/user";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleSubmit = async () => {
     if (!email || !firstName || !lastName) {
@@ -22,21 +24,16 @@ export default function SignUpPage() {
       return;
     }
 
-    setLoading(true);
     try {
-      const user = await signUpUser({
+      await signUpUser({
         email,
         first_name: firstName,
         last_name: lastName,
       });
 
-      console.log(user);
-
-      alert(`Welcome, ${user.first_name || user.email}! Account created.`);
+      router.push("/sign-up/verify");
     } catch (err: any) {
       alert("Sign up failed: " + err.message);
-    } finally {
-      setLoading(false);
     }
   };
 
