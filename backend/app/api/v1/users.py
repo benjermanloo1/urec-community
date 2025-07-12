@@ -1,13 +1,11 @@
-from typing import Union
-
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import select
 
 from backend.app.core.db import get_session
 from backend.app.models.email import Email
 from backend.app.models.user import User, UserCreate, UserRead, UserSignIn
-from backend.app.services.verify_email import create_message, mail
-from backend.app.utils.utils import generate_code, is_valid_jmu_email
+from backend.app.services.verify_email import create_message, generate_code, mail
+from backend.app.utils.utils import is_valid_jmu_email
 
 router = APIRouter(tags=["users"])
 
@@ -16,7 +14,7 @@ router = APIRouter(tags=["users"])
 async def send_email(emails: Email):
     emails = emails.addresses
 
-    code = generate_code()
+    code = generate_code(emails)
 
     html = f"<h1>VERIFY YO EMAIL WITH THIS CODE {code}</h1>"
 

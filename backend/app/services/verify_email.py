@@ -1,5 +1,8 @@
 import os
+import secrets
+from typing import List
 
+import redis
 from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
 
 conf = ConnectionConfig(
@@ -16,6 +19,13 @@ conf = ConnectionConfig(
 )
 
 mail = FastMail(conf)
+r = redis.Redis(
+    host=os.getenv("REDIS_HOST"),
+    port=os.getenv("REDIS_PORT"),
+    decode_responses=True,
+    username=os.getenv("REDIS_USERNAME"),
+    password=os.getenv("REDIS_PASSWORD"),
+)
 
 
 def create_message(recipient: list[str], subject: str, body: str):
@@ -25,3 +35,11 @@ def create_message(recipient: list[str], subject: str, body: str):
     )
 
     return message
+
+
+def generate_code(email: List[str]):
+    code = f"{secrets.randbelow(10**6):06}"
+
+    r.set(name=email[0], value=code, ex=900)
+
+    return code
