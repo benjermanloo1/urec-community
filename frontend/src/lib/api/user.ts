@@ -32,15 +32,19 @@ export async function sendVerification(data: { email: string }) {
   return res;
 }
 
-// TODO: Finish verifyUser
-export async function verifyUser(data: { code: string }) {
+export async function verifyUser(data: { email: string; code: string }) {
   const res = await fetch(`${API_BASE_URL}/sign-up/verify`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
 
-  return res;
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.detail || "Verification failed.");
+  }
+
+  return await res.json();
 }
 
 // TODO: Finish signUpUser

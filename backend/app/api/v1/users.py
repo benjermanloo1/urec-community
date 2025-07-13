@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import select
 
 from backend.app.core.db import get_session
-from backend.app.models.email import Email
+from backend.app.models.signup import Email, VerificationCode
 from backend.app.models.user import User, UserCreate, UserRead, UserSignIn
-from backend.app.services.verify_email import create_message, generate_code, mail
+from backend.app.services.verify_email import create_message, generate_code, mail, r
 from backend.app.utils.utils import is_valid_jmu_email
 
 router = APIRouter(tags=["users"])
@@ -30,13 +30,28 @@ async def send_verification_email(data: Email):
 
     code = generate_code(email)
 
-    html = f"<h1>VERIFY YO EMAIL WITH THIS CODE {code}</h1>"
+    html = f"""
+        <p>Use the code below to verify your email: <br>{code}<br><br>Please do not share this code with anyone else.</p>
+        """
 
     message = create_message([email], "Verify your email", html)
 
     await mail.send_message(message)
 
     return {"message": "Email sent successfully", "code": code}
+
+
+@router.post("/sign-up/verify")
+async def verify_email(data: VerificationCode):
+    email = data.email
+    code = data.code
+
+    if r.get(email) != code:
+        return {"message": "Code does not match", "code": code}
+
+    r.delete(email)
+
+    return {"message": "Email successfully verified", "code": code}
 
 
 @router.post("/sign-up/asdf", response_model=UserRead)
