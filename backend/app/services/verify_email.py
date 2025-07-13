@@ -37,9 +37,9 @@ def create_message(recipient: list[str], subject: str, body: str):
     return message
 
 
-def generate_code(email: List[str]):
+def generate_code(email: str):
     code = f"{secrets.randbelow(10**6):06}"
 
-    r.set(name=email[0], value=code, ex=900)
+    r.set(name=email, value=code, ex=900)
 
     return code

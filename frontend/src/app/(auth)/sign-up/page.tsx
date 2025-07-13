@@ -8,30 +8,22 @@ import { AuthCard } from "@/components/auth/auth-card";
 import { AuthFooter } from "@/components/auth/auth-footer";
 import { AuthHeader } from "@/components/auth/auth-header";
 import { TextInput } from "@/components/auth/text-input";
-
-import { signUpUser } from "@/lib/api/user";
+import { sendVerification } from "@/lib/api/user";
+import { useSignUp } from "@/app/context/SignUpContext";
 
 export default function SignUpPage() {
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const { data, updateData } = useSignUp();
 
   const router = useRouter();
 
+  const email = data.email;
+  const isValidEmail = data.email.endsWith("@dukes.jmu.edu");
+
   const handleSubmit = async () => {
-    if (!email || !firstName || !lastName) {
-      alert("Please fill in all fields.");
-      return;
-    }
-
     try {
-      await signUpUser({
-        email,
-        first_name: firstName,
-        last_name: lastName,
-      });
+      await sendVerification({ email });
 
-      router.push("/sign-up/verify");
+      await router.push("/sign-up/verify");
     } catch (err: any) {
       alert("Sign up failed: " + err.message);
     }
@@ -45,25 +37,30 @@ export default function SignUpPage() {
         <TextInput
           id="firstName"
           label="First Name"
-          value={firstName}
-          onChange={setFirstName}
+          value={data.firstName}
+          onChange={(value) => updateData({ firstName: value })}
           placeholder="Enter your first name"
         />
         <TextInput
           id="lastName"
           label="Last Name"
-          value={lastName}
-          onChange={setLastName}
+          value={data.lastName}
+          onChange={(value) => updateData({ lastName: value })}
           placeholder="Enter your last name"
         />
         <TextInput
           id="email"
           label="Email Address"
-          value={email}
-          onChange={setEmail}
+          value={data.email}
+          onChange={(value) => updateData({ email: value })}
           placeholder="Enter your JMU email"
         />
-        <AuthButton onClick={handleSubmit}>Create Account</AuthButton>
+        <AuthButton
+          onClick={handleSubmit}
+          disabled={!data.firstName.trim() || !data.lastName.trim() || !data.email.trim() || !isValidEmail}
+        >
+          Create Account
+        </AuthButton>
       </div>
 
       <AuthFooter showSignInLink />

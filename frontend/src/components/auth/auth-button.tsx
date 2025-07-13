@@ -30,7 +30,9 @@ export const AuthButton = ({
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={(e) => {
+        if (!disabled) onClick();
+      }}
       disabled={disabled}
       className={`${baseClasses} ${typeClasses[type]} ${disabledClasses} ${className}`}
     >
