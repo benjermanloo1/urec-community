@@ -20,7 +20,7 @@ class User(UserBase, table=True):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: Optional[datetime] = None
 
-    # interests: List["UserInterest"] = Relationship(back_populates="user")
+    interests: List["UserInterest"] = Relationship(back_populates="user")
 
 
 class UserCreate(SQLModel):
@@ -39,6 +39,7 @@ class UserRead(SQLModel):
     created_at: datetime
     updated_at: Optional[datetime] = None
     profile_picture_url: Optional[str] = None
+    interest = List[Interest]
 
 
 class UserSignIn(SQLModel):

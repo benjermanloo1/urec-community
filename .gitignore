@@ -22,6 +22,7 @@ __pycache__*
 
 # database
 alembic*
+interests.txt
 
 # next.js
 /.next/
