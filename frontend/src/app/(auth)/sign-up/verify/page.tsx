@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 
 import { AuthButton } from "@/components/auth/auth-button";
 import { AuthCard } from "@/components/auth/auth-card";
-import { TextInput } from "@/components/auth/text-input";
 import { CodeInput } from "@/components/auth/code-input";
 
 import { verifyUser } from "@/lib/api/user";
@@ -13,6 +12,7 @@ import { useSignUp } from "@/app/context/SignUpContext";
 
 export default function VerifyEmailPage() {
   const [verificationCode, setVerificationCode] = useState("");
+  const [hasError, setHasError] = useState(false);
   const { data, updateData } = useSignUp();
 
   const email = data.email;
@@ -26,17 +26,21 @@ export default function VerifyEmailPage() {
       if (result?.message === "Email successfully verified") {
         await router.push("/sign-up/interests");
       } else {
-        alert("Verification failed: Code does not match");
+        setHasError(true);
       }
     } catch (err: any) {
-      alert("Verification failed: " + err.message);
+      setHasError(true);
     }
+  };
+
+  const clearError = () => {
+    setHasError(false);
   };
 
   return (
     <AuthCard>
       <div className="space-y-6">
-        <CodeInput onCodeChange={setVerificationCode} />
+        <CodeInput onCodeChange={setVerificationCode} hasError={hasError} onClearError={clearError} />
         <AuthButton onClick={handleSubmit} disabled={verificationCode.length !== 6}>
           Verify
         </AuthButton>

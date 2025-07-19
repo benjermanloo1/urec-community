@@ -7,12 +7,15 @@ import { sendVerification } from "@/lib/api/user";
 
 interface CodeInputProps {
   onCodeChange?: (code: string) => void;
+  hasError?: boolean;
+  onClearError?: () => void;
 }
 
-export const CodeInput = ({ onCodeChange }: CodeInputProps) => {
+export const CodeInput = ({ onCodeChange, hasError, onClearError }: CodeInputProps) => {
   const { data, updateData } = useSignUp();
   const [code, setCode] = useState<string[]>(["", "", "", "", "", ""]);
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [shake, setShake] = useState(false);
 
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
@@ -37,6 +40,14 @@ export const CodeInput = ({ onCodeChange }: CodeInputProps) => {
       focusInput(index + 1);
     }
   };
+
+  useEffect(() => {
+    if (hasError) {
+      setShake(true);
+      const timer = setTimeout(() => setShake(false), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [hasError]);
 
   const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Backspace") {
@@ -93,6 +104,10 @@ export const CodeInput = ({ onCodeChange }: CodeInputProps) => {
   const clearCode = () => {
     setCode(["", "", "", "", "", ""]);
     focusInput(0);
+
+    if (onClearError) {
+      onClearError();
+    }
   };
 
   const hasValue = code.some((digit) => digit !== "");
@@ -112,7 +127,7 @@ export const CodeInput = ({ onCodeChange }: CodeInputProps) => {
       <h2 className="text-xl font-semibold text-gray-800">Enter Verification Code</h2>
 
       <div className="relative">
-        <div className="flex gap-2">
+        <div className={`flex gap-2 transition-all ${shake ? "animate-shake" : ""}`}>
           {code.map((digit, index) => (
             <input
               key={index}
@@ -127,7 +142,9 @@ export const CodeInput = ({ onCodeChange }: CodeInputProps) => {
               onKeyDown={(e) => handleKeyDown(index, e)}
               onPaste={handlePaste}
               onFocus={() => setActiveIndex(index)}
-              className={`w-12 h-12 text-center text-black text-xl font-bold border-2 rounded-lg outline-none transition-all duration-200 border-gray-300 bg-white hover:border-gray-400`}
+              className={`w-12 h-12 text-center text-black text-xl font-bold border-2 rounded-lg outline-none transition-all duration-200 bg-white ${
+                hasError ? "border-red-500" : "border-gray-300"
+              }`}
             />
           ))}
         </div>
@@ -143,9 +160,11 @@ export const CodeInput = ({ onCodeChange }: CodeInputProps) => {
         )}
       </div>
 
+      {hasError && <p className="text-sm text-red-600 font-medium mt-2 text-center">Code does not match</p>}
+
       <div className="text-sm text-gray-600 text-center">
         <p>Enter the 6-digit code sent to your device</p>
-        <ResendCode onResend={handleSubmit} />{" "}
+        <ResendCode onResend={handleSubmit} />
       </div>
     </div>
   );
