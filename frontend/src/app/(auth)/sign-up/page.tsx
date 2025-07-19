@@ -10,8 +10,10 @@ import { AuthHeader } from "@/components/auth/auth-header";
 import { TextInput } from "@/components/auth/text-input";
 import { sendVerification } from "@/lib/api/user";
 import { useSignUp } from "@/app/context/SignUpContext";
+import { Loader2 } from "lucide-react";
 
 export default function SignUpPage() {
+  const [loading, setLoading] = useState(false);
   const { data, updateData } = useSignUp();
 
   const router = useRouter();
@@ -20,6 +22,8 @@ export default function SignUpPage() {
   const isValidEmail = data.email.endsWith("@dukes.jmu.edu");
 
   const handleSubmit = async () => {
+    setLoading(true);
+
     try {
       await sendVerification({ email });
 
@@ -27,6 +31,8 @@ export default function SignUpPage() {
     } catch (err: any) {
       alert("Sign up failed: " + err.message);
     }
+
+    setLoading(false);
   };
 
   return (
@@ -55,12 +61,18 @@ export default function SignUpPage() {
           onChange={(value) => updateData({ email: value })}
           placeholder="Enter your JMU email"
         />
-        <AuthButton
-          onClick={handleSubmit}
-          disabled={!data.firstName.trim() || !data.lastName.trim() || !data.email.trim() || !isValidEmail}
-        >
-          Create Account
-        </AuthButton>
+        {loading ? (
+          <div className="flex justify-center">
+            <Loader2 className="size-6 text-slate-300 animate-spin" />
+          </div>
+        ) : (
+          <AuthButton
+            onClick={handleSubmit}
+            disabled={!data.firstName.trim() || !data.lastName.trim() || !data.email.trim() || !isValidEmail}
+          >
+            Create Account
+          </AuthButton>
+        )}
       </div>
 
       <AuthFooter showSignInLink />

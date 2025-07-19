@@ -6,6 +6,7 @@ interface AuthButtonProps {
   type?: "primary" | "secondary";
   disabled?: boolean;
   className?: string;
+  isLoading?: boolean;
 }
 
 export const AuthButton = ({

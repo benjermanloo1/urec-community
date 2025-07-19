@@ -9,10 +9,12 @@ import { CodeInput } from "@/components/auth/code-input";
 
 import { verifyUser } from "@/lib/api/user";
 import { useSignUp } from "@/app/context/SignUpContext";
+import { Loader2 } from "lucide-react";
 
 export default function VerifyEmailPage() {
   const [verificationCode, setVerificationCode] = useState("");
   const [hasError, setHasError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { data, updateData } = useSignUp();
 
   const email = data.email;
@@ -20,6 +22,7 @@ export default function VerifyEmailPage() {
   const router = useRouter();
 
   const handleSubmit = async () => {
+    setLoading(true);
     try {
       const result = await verifyUser({ email, code: verificationCode });
 
@@ -31,6 +34,8 @@ export default function VerifyEmailPage() {
     } catch (err: any) {
       setHasError(true);
     }
+
+    setLoading(false);
   };
 
   const clearError = () => {
@@ -41,9 +46,15 @@ export default function VerifyEmailPage() {
     <AuthCard>
       <div className="space-y-6">
         <CodeInput onCodeChange={setVerificationCode} hasError={hasError} onClearError={clearError} />
-        <AuthButton onClick={handleSubmit} disabled={verificationCode.length !== 6}>
-          Verify
-        </AuthButton>
+        {loading ? (
+          <div className="flex justify-center">
+            <Loader2 className="size-6 text-slate-300 animate-spin" />
+          </div>
+        ) : (
+          <AuthButton onClick={handleSubmit} disabled={verificationCode.length !== 6}>
+            Verify
+          </AuthButton>
+        )}
       </div>
     </AuthCard>
   );
