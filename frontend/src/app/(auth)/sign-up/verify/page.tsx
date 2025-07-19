@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { AuthButton } from "@/components/auth/auth-button";
+import { SubmitButton } from "@/components/submit-button";
 import { AuthCard } from "@/components/auth/auth-card";
 import { CodeInput } from "@/components/auth/code-input";
 
@@ -51,9 +51,9 @@ export default function VerifyEmailPage() {
             <Loader2 className="size-6 text-slate-300 animate-spin" />
           </div>
         ) : (
-          <AuthButton onClick={handleSubmit} disabled={verificationCode.length !== 6}>
+          <SubmitButton onClick={handleSubmit} disabled={verificationCode.length !== 6}>
             Verify
-          </AuthButton>
+          </SubmitButton>
         )}
       </div>
     </AuthCard>

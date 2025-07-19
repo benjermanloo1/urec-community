@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-import { AuthButton } from "@/components/auth/auth-button";
+import { SubmitButton } from "@/components/submit-button";
 import { AuthCard } from "@/components/auth/auth-card";
 import { AuthFooter } from "@/components/auth/auth-footer";
 import { AuthHeader } from "@/components/auth/auth-header";
@@ -47,7 +47,7 @@ export default function SignInPage() {
           placeholder="Enter your JMU email"
         />
         <RememberMeCheckbox checked={rememberMe} onChange={setRememberMe} />
-        <AuthButton onClick={handleSubmit}>Sign In</AuthButton>
+        <SubmitButton onClick={handleSubmit}>Sign In</SubmitButton>
       </div>
 
       <AuthFooter showSignUpLink />

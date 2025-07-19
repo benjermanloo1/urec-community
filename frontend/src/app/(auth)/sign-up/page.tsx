@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { AuthButton } from "@/components/auth/auth-button";
+import { SubmitButton } from "@/components/submit-button";
 import { AuthCard } from "@/components/auth/auth-card";
 import { AuthFooter } from "@/components/auth/auth-footer";
 import { AuthHeader } from "@/components/auth/auth-header";
@@ -66,12 +66,12 @@ export default function SignUpPage() {
             <Loader2 className="size-6 text-slate-300 animate-spin" />
           </div>
         ) : (
-          <AuthButton
+          <SubmitButton
             onClick={handleSubmit}
             disabled={!data.firstName.trim() || !data.lastName.trim() || !data.email.trim() || !isValidEmail}
           >
             Create Account
-          </AuthButton>
+          </SubmitButton>
         )}
       </div>
 

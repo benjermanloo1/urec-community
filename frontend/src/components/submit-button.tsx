@@ -1,6 +1,6 @@
 import React from "react";
 
-interface AuthButtonProps {
+interface SubmitButtonProps {
   onClick: () => void;
   children: React.ReactNode;
   type?: "primary" | "secondary";
@@ -9,13 +9,13 @@ interface AuthButtonProps {
   isLoading?: boolean;
 }
 
-export const AuthButton = ({
+export const SubmitButton = ({
   onClick,
   children,
   type = "primary",
   disabled = false,
   className = "",
-}: AuthButtonProps) => {
+}: SubmitButtonProps) => {
   const baseClasses =
     "w-full py-3 px-4 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent transform transition-all duration-200";
 
