@@ -1,5 +1,3 @@
-from backend.app.services.verify_email import r
-
 JMU_EMAIL_FORMAT = "@dukes.jmu.edu"
 
 
