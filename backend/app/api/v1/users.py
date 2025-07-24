@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import select
 
 from backend.app.core.db import get_session
+from backend.app.models.interest import Interest
 from backend.app.models.signup import Email, VerificationCode
 from backend.app.models.user import User, UserCreate, UserRead, UserSignIn
 from backend.app.services.verify_email import create_message, generate_code, mail, r
@@ -84,3 +85,10 @@ async def create_user(user_data: UserCreate, session=Depends(get_session)):
     session.refresh(db_user)
 
     return db_user
+
+
+@router.get("/sign-up/interests")
+async def fetch_interests(session=Depends(get_session)):
+    interests = session.exec(select(Interest)).all()
+
+    return interests

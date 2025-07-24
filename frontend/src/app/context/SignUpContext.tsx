@@ -1,13 +1,14 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
+import { Interest } from "@/lib/types";
 
 interface SignUpData {
   firstName: string;
   lastName: string;
   email: string;
   verified: boolean;
-  interests: string[]; // CHANGE ONCE DEVELOPING
+  interests: Interest[]; // CHANGE ONCE DEVELOPING
   personalInfo?: {
     bio?: string;
     // ADD OTHER OPTIONAL INFO ONCE DEVELOPING
@@ -43,17 +44,22 @@ export function SignUpProvider({ children }: { children: ReactNode }) {
     } catch {}
   }, []);
 
-  const updateData = (fields: Partial<SignUpData>) => {
+  useEffect(() => {
+    try {
+      localStorage.setItem("signUpData", JSON.stringify(data));
+    } catch {}
+  }, [data]);
+
+  const updateData = useCallback((fields: Partial<SignUpData>) => {
     setData((prev) => ({ ...prev, ...fields }));
-  };
+  }, []);
 
-  const clearData = () => {
+  const clearData = useCallback(() => {
     setData(defaultData);
-
     try {
       localStorage.removeItem("signUpData");
     } catch {}
-  };
+  }, []);
 
   return <SignUpContext.Provider value={{ data, updateData, clearData }}>{children}</SignUpContext.Provider>;
 }

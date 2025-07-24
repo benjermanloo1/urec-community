@@ -1,6 +1,20 @@
-import type { UserRead } from "@/lib/types";
+import type { Interest, UserRead } from "@/lib/types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
+export async function fetchInterests() {
+  const res = await fetch(`${API_BASE_URL}/sign-up/interests`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.detail || "Could not fetch interests.");
+  }
+
+  return res.json();
+}
 
 export async function signInUser(data: { email: string }): Promise<UserRead> {
   const res = await fetch(`${API_BASE_URL}/sign-in`, {
@@ -11,7 +25,7 @@ export async function signInUser(data: { email: string }): Promise<UserRead> {
 
   if (!res.ok) {
     const error = await res.json();
-    throw new Error(error.detail || "Sign in failed");
+    throw new Error(error.detail || "Sign in failed.");
   }
 
   return res.json() as Promise<UserRead>;
@@ -57,7 +71,7 @@ export async function signUpUser(data: { email: string; first_name: string; last
 
   if (!res.ok) {
     const error = await res.json();
-    throw new Error(error.detail || "Sign up failed");
+    throw new Error(error.detail || "Sign up failed.");
   }
 
   return res.json() as Promise<UserRead>;

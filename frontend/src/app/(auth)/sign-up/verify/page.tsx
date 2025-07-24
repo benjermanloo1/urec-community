@@ -27,6 +27,7 @@ export default function VerifyEmailPage() {
       const result = await verifyUser({ email, code: verificationCode });
 
       if (result?.message === "Email successfully verified") {
+        updateData({ verified: true });
         await router.push("/sign-up/interests");
       } else {
         setHasError(true);

@@ -9,3 +9,8 @@ export interface UserRead {
   updated_at?: string | null;
   profile_picture_url?: string | null;
 }
+
+export interface Interest {
+  id: number;
+  name: string;
+}
