@@ -24,6 +24,9 @@ __pycache__*
 alembic*
 interests.txt
 
+# images
+images*
+
 # next.js
 /.next/
 /frontend/.next/
