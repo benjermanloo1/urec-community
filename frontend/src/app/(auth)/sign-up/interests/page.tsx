@@ -25,16 +25,16 @@ export default function InterestsPage() {
     [updateData]
   );
 
+  const handleSubmit = async () => {
+    // console.log(data);
+    await router.push("/sign-up/complete");
+  };
+
   return (
     <InterestsCard>
       <div className="space-y-6">
         <InterestsTable onChange={handleInterestChange} />
-        <SubmitButton
-          onClick={() => {
-            console.log(data);
-          }}
-          disabled={interests.length < 1}
-        >
+        <SubmitButton onClick={handleSubmit} disabled={interests.length < 1}>
           Next
         </SubmitButton>
       </div>

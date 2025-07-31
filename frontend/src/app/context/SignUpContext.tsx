@@ -8,10 +8,12 @@ interface SignUpData {
   lastName: string;
   email: string;
   verified: boolean;
-  interests: Interest[]; // CHANGE ONCE DEVELOPING
+  interests: Interest[];
   personalInfo?: {
     bio?: string;
-    // ADD OTHER OPTIONAL INFO ONCE DEVELOPING
+    instagram?: string;
+    snapchat?: string;
+    profilePicture?: string;
   };
 }
 
